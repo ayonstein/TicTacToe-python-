@@ -9,14 +9,39 @@ def printBoard():
         print (" "+str(board[i])+" |"),
     print ("\n")
 
+def checkAll():
+    allDone = False
+    for i in range(len(board)):
+        if board[i]!="X" and board[i]!=0:
+            allDone = True
+    return allDone
+
+
+def compInput():
+    for i in range(len(board)):
+        if i>0 and i % 3 == 0:
+            print ("\n--------------")
+        print (" "+str(board[i])+" |"),
+    print ("\n")
+
 def selectPosition(gameover):
+    """gamer input"""
     selI = input("Select a position: ")
-    print (selI)
     if selI < 1 and selI > 9:
         print ("Wrong input!")
+    elif board[selI-1]==0:
+        if checkAll() == True:
+            print ("Game Over!")
+            gameover = True
+        else:
+            print ("Already blocked!")
+        printBoard()
     else:
         board[selI-1] = 0
         printBoard()
+
+    """computer input"""
+    compInput()
 
     for i in range(len(board)):
         if (i%3 == 0):
@@ -24,7 +49,7 @@ def selectPosition(gameover):
                 gameover = True
                 win = True
                 print ("You WIN!")
-                break;
+                break
         if (i<3 and board[i] == board[i+3] and board[i+3] == board[i+6]):
             gameover = True
             win = True
